@@ -9,4 +9,21 @@ class Position extends Model
 {
     /** @use HasFactory<\Database\Factories\PositionFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'number',
+        'Fee',
+        'status',
+        'parking_id'
+    ];
+
+    public function parking()
+    {
+        return $this->belongsTo(Parking::class);
+    }
+
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
