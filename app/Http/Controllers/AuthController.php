@@ -9,44 +9,63 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     use HttpResponses;
 
+
     public function login(LoginUserRequest $request)
     {
-        $request->validated($request->only(['email', 'password']));
+        // Validate request
+        $validated = $request->validated();
 
-        if(!Auth::attempt($request->only(['email', 'password']))) {
-            return $this->error('', 'Credentials do not match', 401);
+        // Attempt authentication
+        if (!Auth::attempt($validated)) {
+            return $this->error(null, 'Invalid credentials', 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        // Retrieve authenticated user
+        $user = Auth::user();
 
         return $this->success([
-            'user' => $user,
+            'user'  => $user,
             'token' => $user->createToken('API Token')->plainTextToken
-        ]);
+        ], 'Login successful');
     }
+
 
     public function register(StoreUserRequest $request)
     {
-        $request->validated($request->only(['name', 'email', 'password']));
+        try {
+            // Validate request
+            $validated = $request->validated();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            // Create new user
+            $user = User::create([
+                'name'     => $validated['name'],
+                'email'    => $validated['email'],
+                'password' => Hash::make($validated['password']),
+            ]);
 
-        return $this->success([
-            'user' => $user,
-            'token' => $user->createToken('API Token')->plainTextToken
-        ]);
+            return $this->success([
+                'user'  => $user,
+                'token' => $user->createToken('API Token')->plainTextToken
+            ], 'User registered successfully', 201);
+        } catch (\Exception $e) {
+            return $this->error(null, 'User registration failed: ' . $e->getMessage(), 500);
+        }
     }
 
-    public function logout(Request $request){ 
-        return $this->success($request->all(), 'User logout successfully');
+
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->currentAccessToken()->delete();
+            return $this->success(null, 'Successfully logged out');
+        } catch (\Exception $e) {
+            return $this->error(null, 'Logout failed: ' . $e->getMessage(), 500);
+        }
     }
 }

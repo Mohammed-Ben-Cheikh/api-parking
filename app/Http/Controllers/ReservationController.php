@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Traits\HttpResponses;
 
 class ReservationController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
