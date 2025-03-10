@@ -10,13 +10,12 @@ return new class extends Migration
     {
         Schema::create('parkings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->string('address');
             $table->integer('total_position');
-            $table->integer('available_position');
-            $table->integer('reserved_position');
-            $table->decimal('hourly_rate', 8, 2);
+            $table->integer('available_position')->default(0);
+            $table->integer('reserved_position')->default(0);
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('region_id');
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');

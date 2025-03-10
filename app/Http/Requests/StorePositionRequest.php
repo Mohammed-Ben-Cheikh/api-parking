@@ -11,7 +11,7 @@ class StorePositionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'number' => ['required', 'string', 'max:255', 'unique:parkings,number'], // Unique number in the 'parkings' table
+            'hourly_rate' => ['required', 'numeric', 'min:0'], // Ensure hourly rate is a positive number
+            'status' => ['required', 'in:available,occupied,reserved'], // Only accept the values in the enum
+            'parking_id' => ['required', 'exists:parkings,id'], // Ensure the parking_id exists in the parkings table
         ];
     }
 }

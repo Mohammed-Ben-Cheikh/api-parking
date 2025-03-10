@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
-            $table->string('number');  // Numéro de la place
-            $table->decimal('Fee',10,2);
+            $table->string('number')->unique();  
+            $table->decimal('hourly_rate',8,2);
             $table->enum('status', ['available', 'occupied', 'reserved'])->default('available');
             $table->unsignedBigInteger('parking_id');
             $table->foreign('parking_id')->references('id')->on('parkings')->onDelete('cascade');

@@ -11,7 +11,7 @@ class StoreRegionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StoreRegionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255', 'unique:regions,name'],
+            'description' => ['required', 'string', 'min:6'],
+            'status' => ['required', 'boolean'], // Correction pour un booléen
         ];
+        
     }
 }
