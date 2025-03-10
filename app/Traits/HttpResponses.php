@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 trait HttpResponses {
-    public function succes($data ,$message = 'null', $code = 200) {
+    public function success($data ,$message = 'null', $code = 200) {
         return response()->json([
             'status' => 'Request was successful.',
             'message' => $message,
