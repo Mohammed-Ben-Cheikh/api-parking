@@ -22,15 +22,13 @@ class StoreReservationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'start_time' => ['required', 'date', 'before:end_time'], // Assure que la date de début est avant la date de fin
-            'end_time' => ['required', 'date', 'after:start_time'], // Assure que la date de fin est après la date de début
-            'status' => ['required', 'in:pending,active,completed,cancelled'], // Seule une des valeurs énumérées est valide
-            'total_price' => ['required', 'numeric', 'min:0'], // Assure que le prix total est un nombre positif
-            'notes' => ['nullable', 'string'], // Si présent, doit être une chaîne de caractères
-        
-            // Relations
-            'user_id' => ['required', 'exists:users,id'], // Assure que l'ID de l'utilisateur existe dans la table 'users'
-            'position_id' => ['required', 'exists:positions,id'], // Assure que l'ID de la position existe dans la table 'positions'
+            'start_time' => ['required', 'date', 'before:end_time'],
+            'end_time' => ['required', 'date', 'after:start_time'],
+            'status' => ['required', 'in:pending,active,completed,cancelled'],
+            'total_price' => ['required', 'numeric', 'min:0'],
+            'notes' => ['nullable', 'string'],
+            'user_id' => ['required', 'exists:users,id'],
+            'position_id' => ['required', 'exists:positions,id'],
         ];
         
     }

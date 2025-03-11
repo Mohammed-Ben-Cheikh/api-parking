@@ -24,7 +24,7 @@ class StoreRegionRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'unique:regions,name'],
             'description' => ['required', 'string', 'min:6'],
-            'status' => ['required', 'boolean'], // Correction pour un booléen
+            'status' => ['required', 'boolean'],
         ];
         
     }
