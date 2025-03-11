@@ -12,6 +12,7 @@ class Position extends Model
 
     protected $fillable = [
         'number',
+        'hourly_rate',
         'Fee',
         'status',
         'parking_id'

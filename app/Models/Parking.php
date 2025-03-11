@@ -17,7 +17,6 @@ class Parking extends Model
         'total_position',
         'available_position',
         'reserved_position',
-        'hourly_rate',
         'status',
         'region_id'
     ];
