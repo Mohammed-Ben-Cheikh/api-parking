@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('number')->unique();  
             $table->decimal('hourly_rate',8,2);
-            $table->enum('status', ['available', 'occupied', 'reserved'])->default('available');
+            $table->enum('status', ['available', 'unavailable', 'reserved'])->default('available');
             $table->unsignedBigInteger('parking_id');
             $table->foreign('parking_id')->references('id')->on('parkings')->onDelete('cascade');
             $table->timestamps();

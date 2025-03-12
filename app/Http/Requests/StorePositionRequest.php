@@ -22,7 +22,7 @@ class StorePositionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'number' => ['required', 'string', 'max:255', 'unique:parkings,number'],
+            'number' => ['required', 'string', 'max:255', 'unique:positions,number'],
             'hourly_rate' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'in:available,occupied,reserved'],
             'parking_id' => ['required', 'exists:parkings,id'],
