@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Parking;
 use App\Traits\HttpResponses;
 use App\Http\Requests\StoreParkingRequest;
-use App\Http\Requests\UpdateParkingRequest;
-
 class ParkingController extends Controller
 {
     use HttpResponses;

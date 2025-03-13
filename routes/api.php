@@ -15,24 +15,26 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     // Déconnexion
     Route::post('/logout', [AuthController::class, 'logout']);
-    
+
     // Parkings
     Route::get('/parkings', [ParkingController::class, 'index']);
     Route::get('/parkings/{id}', [ParkingController::class, 'show']);
-    
+
     // Routes protégées pour les administrateurs
     Route::middleware('can:admin')->group(function () {
 
 
     });
 
-    // Réservations
-    Route::get('/reservations', [ReservationController::class, 'index']);
-    Route::get('/reservations/{id}', [ReservationController::class, 'show']);
-    Route::post('/reservations', [ReservationController::class, 'store']);
-    Route::put('/reservations/{id}', [ReservationController::class, 'update']);
-    Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
+
 });
+// Réservations
+Route::get('/reservations', [ReservationController::class, 'index']);
+Route::get('/reservations/{id}', [ReservationController::class, 'show']);
+Route::post('/reservations', [ReservationController::class, 'store']);
+Route::put('/reservations/{id}', [ReservationController::class, 'update']);
+Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
+
 
 Route::get('/parkings', [ParkingController::class, 'index']);
 Route::get('/parkings/{id}', [ParkingController::class, 'show']);
