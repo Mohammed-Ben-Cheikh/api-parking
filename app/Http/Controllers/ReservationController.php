@@ -30,6 +30,7 @@ class ReservationController extends Controller
             $validated = $request->validated();
             // Check if position is already reserved for the given time period
             $existingReservation = Reservation::where('position_id', $validated['position_id'])
+                ->where('status', '=', 'active')
                 ->where('start_time', '<', $validated['end_time'])
                 ->where('end_time', '>', $validated['start_time'])
                 ->exists();
@@ -79,6 +80,7 @@ class ReservationController extends Controller
             $validated = $request->validated();
             // Check if position is already reserved for the given time period
             $existingReservation = Reservation::where('position_id', $validated['position_id'])
+                ->where('status', '=', 'active')
                 ->where('id', '!=', $Reservation->id)
                 ->where('start_time', '<', $validated['end_time'])
                 ->where('end_time', '>', $validated['start_time'])
@@ -109,12 +111,16 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reservation $Reservation)
+    public function destroy($id)
     {
         try {
-            $Reservation->delete();
+            $reservation = Reservation::find($id);
+
+            $reservation->update([
+                "status" => "cancelled",
+            ]);
             return $this->success([
-                'Reservation' => $Reservation
+                'Reservation' => $reservation
             ], 'Reservation deleted successfully', 201);
         } catch (\Exception $e) {
             return $this->error(null, 'Reservation delete failed: ' . $e->getMessage(), 500);

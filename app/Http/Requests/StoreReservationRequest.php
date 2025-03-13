@@ -24,7 +24,7 @@ class StoreReservationRequest extends FormRequest
         return [
             'start_time' => ['required', 'date', 'before:end_time'],
             'end_time' => ['required', 'date', 'after:start_time'],
-            'status' => ['required', 'in:pending,active,completed,cancelled'],
+            'status' => ['required', 'in:active,completed,cancelled'],
             'total_price' => ['required', 'numeric', 'min:0'],
             'notes' => ['nullable', 'string'],
             'user_id' => ['required', 'exists:users,id'],

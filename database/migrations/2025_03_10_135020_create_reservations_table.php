@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->enum('status', ['pending', 'active', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['active', 'completed', 'cancelled'])->default('active');
             $table->decimal('total_price', 8, 2);
             $table->text('notes')->nullable();
             
