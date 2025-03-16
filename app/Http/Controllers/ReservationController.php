@@ -27,7 +27,7 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
             // Check if position is already reserved for the given time period
             $existingReservation = Reservation::where('position_id', $validated['position_id'])
                 ->where('status', '=', 'active')
@@ -77,7 +77,7 @@ class ReservationController extends Controller
     public function update(StoreReservationRequest $request, Reservation $Reservation)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
             // Check if position is already reserved for the given time period
             $existingReservation = Reservation::where('position_id', $validated['position_id'])
                 ->where('status', '=', 'active')

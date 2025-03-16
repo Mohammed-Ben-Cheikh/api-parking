@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/reservations/{id}', [ReservationController::class, 'destroy']);
 
     // Routes protégées pour les administrateurs
-    Route::middleware('is_admin')->group(function () {
+    Route::middleware('Admin')->group(function () {
 
         Route::get('/regions', [RegionController::class, 'index']);
         Route::get('/regions/{id}', [RegionController::class, 'show']);

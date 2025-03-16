@@ -27,7 +27,7 @@ class RegionController extends Controller
     public function store(StoreRegionRequest $request)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
 
             $region = Region::create([
                 "name" => $validated["name"],
@@ -61,11 +61,11 @@ class RegionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreRegionRequest $request, Region $region)
+    public function update(StoreRegionRequest $request,$id)
     {
         try {
-            $validated = $request->validated();
-
+            $validated = $request->all();
+            $region = Region::find($id);
             $region->update([
                 "name" => $validated["name"],
                 "description" => $validated["description"],
@@ -83,9 +83,10 @@ class RegionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Region $region)
+    public function destroy($id)
     {
         try {
+            $region = Region::find($id);
             $region->delete();
             return $this->success([
                 'region'  => $region

@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function login(LoginUserRequest $request)
     {
         // Validate request
-        $validated = $request->validated();
+        $validated = $request->all();
 
         // Attempt authentication
         if (!Auth::attempt($validated)) {
@@ -39,7 +39,7 @@ class AuthController extends Controller
     {
         try {
             // Validate request
-            $validated = $request->validated();
+            $validated = $request->all();
 
             // Create new user
             $user = User::create([

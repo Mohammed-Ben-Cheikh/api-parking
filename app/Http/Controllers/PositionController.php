@@ -27,7 +27,7 @@ class PositionController extends Controller
     public function store(StorePositionRequest $request)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
 
             $Position = Position::create([
                 'number' => $validated['number'],
@@ -79,7 +79,7 @@ class PositionController extends Controller
     public function update(StorePositionRequest $request, Position $Position)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
 
             $Position->update([
                 'number' => $validated['number'],

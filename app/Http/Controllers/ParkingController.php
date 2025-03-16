@@ -26,7 +26,7 @@ class ParkingController extends Controller
     public function store(StoreParkingRequest $request)
     {
         try {
-            $validated = $request->validated();
+            $validated = $request->all();
 
             $Parking = Parking::create([
                 'name' => $validated['name'],
@@ -60,7 +60,7 @@ class ParkingController extends Controller
     }
 
     public function showByRegion($id)
-    {
+    {   
         $Parkings = Parking::where('region_id','=',$id);
         if (!$Parkings) {
             return $this->error(null, 'Parkings not found', 404);
@@ -74,11 +74,11 @@ class ParkingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreParkingRequest $request, Parking $Parking)
+    public function update(StoreParkingRequest $request,$id)
     {
         try {
-            $validated = $request->validated();
-
+            $Parking = Parking::find($id);
+            $validated = $request->all();
             $Parking->update([
                 'name' => $validated['name'],
                 'description' => $validated['description'],
@@ -87,7 +87,6 @@ class ParkingController extends Controller
                 'status' => $validated['status'],
                 'region_id' => $validated['region_id']
             ]);
-
             return $this->success([
                 'Parking'  => $Parking
             ], 'Parking updated successfully', 201);
@@ -99,9 +98,13 @@ class ParkingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Parking $Parking)
+    public function destroy($id)
     {
         try {
+            $Parking = Parking::find($id);
+            if (!$Parking) {
+                return $this->error(null, 'Parking not found', 404);
+            }
             $Parking->delete();
             return $this->success([
                 'Parking'  => $Parking
